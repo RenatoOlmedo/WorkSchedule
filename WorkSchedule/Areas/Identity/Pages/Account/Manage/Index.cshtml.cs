@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WorkSchedule.Data;
+using WorkSchedule.Models;
 
 namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
 {
@@ -16,13 +18,17 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _db;
 
+        public List<Empresa> empresas { get; set; }
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _db = db;
         }
 
         /// <summary>
@@ -80,12 +86,12 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            empresas = _db.empresa.Where(x => x.status ==1).ToList();
             await LoadAsync(user);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string telefone, int? empresa, string tipo_pessoa)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
