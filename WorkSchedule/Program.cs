@@ -3,22 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using WorkSchedule.Data;
 using WorkSchedule.Models;
 
-//private async Task CreateRoles(IServiceProvider serviceProvider)
-//{
-//    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-//    string[] rolesNames = { "Admin", "Empresario", "Funcionario" };
-//    IdentityResult result;
-//    foreach (var namesRole in rolesNames)
-//    {
-//        var roleExist = await roleManager.RoleExistsAsync(namesRole);
-//        if (!roleExist)
-//        {
-//            result = await roleManager.CreateAsync(new IdentityRole(namesRole));
-//        }
-//    }
-//}
-
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -84,6 +68,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var servicesScope = scope.ServiceProvider;
+
+    await Seeds.InitializeAsync(servicesScope);
+}
 
 if (app.Environment.IsDevelopment())
 {
