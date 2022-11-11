@@ -105,6 +105,8 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            await _userManager.AddToRoleAsync(user, tipo_pessoa);
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

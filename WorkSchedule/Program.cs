@@ -69,13 +69,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var servicesScope = scope.ServiceProvider;
-
-    await Seeds.InitializeAsync(servicesScope);
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
