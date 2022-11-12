@@ -18,16 +18,17 @@
             <input type="radio" id="funcionario" name="tipo_pessoa" value="Funcionario">
             <label for="funcionario">Funcionário</label><br>
            <br />
-            @if(Model.empresas != null)
-            {
-                <select name="empresaId">
-                    <option value="">Selecione sua empresa</option>
-                @foreach(var empresa in Model.empresas)
+                @if(Model.empresas != null)
                 {
-                    <option value="@empresa.Id">@empresa.razaoSocial</option>
+                    <select name="empresaId">
+                        <option value="">Selecione sua empresa</option>
+                    @foreach(var empresa in Model.empresas)
+                    {
+                        <option value="@empresa.Id">@empresa.razaoSocial</option>
+                    }
+                    </select>
                 }
-            </select>
-            }
+                <a asp-page="/Empresas">Cadastre sua empresa</a>
             
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Salvar</button>
         </form>

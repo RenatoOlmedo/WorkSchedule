@@ -1,0 +1,37 @@
+﻿@page
+@model WorkSchedule.Pages.EmpresasModel
+
+@{
+    ViewData["Title"] = "Empresas";
+}
+
+<h4>Adicione sua Empresa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Empresa.razaoSocial" class="control-label">Razão Social</label>
+                <input asp-for="Empresa.razaoSocial" class="form-control" />
+                <span asp-validation-for="Empresa.razaoSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Empresa.cnpj" class="control-label">CNPJ</label>
+                <input asp-for="Empresa.cnpj" class="form-control" placeholder="00.000.000/0001-00"/>
+                <span asp-validation-for="Empresa.cnpj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

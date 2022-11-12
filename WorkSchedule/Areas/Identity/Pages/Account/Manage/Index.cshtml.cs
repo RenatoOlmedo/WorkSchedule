@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using WorkSchedule.Data;
 using WorkSchedule.Models;
 
@@ -62,7 +63,7 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Número do telefone")]
             public string PhoneNumber { get; set; }
         }
 
@@ -91,9 +92,11 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string telefone, int? empresa, string tipo_pessoa)
+        public async Task<IActionResult> OnPostAsync(string telefone, int? empresaId, string tipo_pessoa)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var id = _userManager.GetUserId(User);
+            var user = await _db.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -106,6 +109,12 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             }
 
             await _userManager.AddToRoleAsync(user, tipo_pessoa);
+            
+            //if (empresaId.HasValue)
+            //{
+            //    var empresa = await _db.empresa.Where(x => x.Id == empresaId).FirstOrDefaultAsync();
+            //    user.empresa = empresa;
+            //}
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
@@ -113,13 +122,13 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Erro inesperado tentado alterar seu telefone.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Seu perfil foi atualizado";
             return RedirectToPage();
         }
     }
