@@ -17,14 +17,14 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _db;
 
         public List<Empresa> empresas { get; set; }
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ApplicationDbContext db)
         {
             _userManager = userManager;
@@ -67,7 +67,7 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -94,30 +94,31 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync(string telefone, int? empresaId, string tipo_pessoa)
         {
-            var id = _userManager.GetUserId(User);
-            var user = await _db.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
             if (!ModelState.IsValid)
             {
                 await LoadAsync(user);
                 return Page();
             }
 
-            await _userManager.AddToRoleAsync(user, tipo_pessoa);
-            
-            //if (empresaId.HasValue)
-            //{
-            //    var empresa = await _db.empresa.Where(x => x.Id == empresaId).FirstOrDefaultAsync();
-            //    user.empresa = empresa;
-            //}
+            if (!String.IsNullOrEmpty(tipo_pessoa))
+            {
+                await _userManager.AddToRoleAsync(user, tipo_pessoa);
+            }
+
+            if (empresaId.HasValue)
+            {
+                var empresa = await _db.empresa.Where(x => x.Id == empresaId).FirstOrDefaultAsync();
+                user.empresa = empresa;
+            }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (telefone != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)

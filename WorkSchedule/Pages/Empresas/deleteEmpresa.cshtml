@@ -1,0 +1,38 @@
+﻿@page
+@model WorkSchedule.Pages.Empresas.deleteEmpresaModel
+
+@{
+    ViewData["Title"] = "Desativar empresa";
+}
+
+<h3>Você tem certeza que deseja desativar essa empresa?</h3>
+<div>
+    <h4>Empresa</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empresa.razaoSocial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empresa.razaoSocial)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empresa.cnpj)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empresa.cnpj)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Empresa.status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Empresa.status)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Empresa.Id" />
+        <input type="submit" value="Desativar" class="btn btn-danger" /> |
+        <a asp-page="ListEmpresas">Voltar</a>
+    </form>
+</div>
