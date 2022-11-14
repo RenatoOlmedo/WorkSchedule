@@ -10,28 +10,52 @@
 <div>
     <h4>Empresa</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Empresa.razaoSocial)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Empresa.razaoSocial)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Empresa.cnpj)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Empresa.cnpj)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Empresa.status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Empresa.status)
-        </dd>
-    </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Razão social</th>
+                <th scope="col">CNPJ</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Empresa.razaoSocial)</td>
+                <td>@Html.DisplayFor(model => model.Empresa.cnpj)</td>
+                <td>@Model.status</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Empresa?.Id">Edit</a> |
+    <h4>Gestores</h4>
+    @if (!Model.gestor.Any())
+    {
+        <p>Não há gestores vinculados</p>
+    }
+    else
+    {
+        @foreach(var gestor in Model.gestor)
+        {
+            <p>@gestor.Email</p>
+        }
+        <hr />
+    }
+        
+    <h4>Funcionários</h4>
+    @if (!Model.funcionario.Any())
+    {
+        <p>Não há funcionários vinculados</p>
+    }
+    else
+    {
+       @foreach (var funcionario in Model.funcionario)
+        {
+            <p>@funcionario.Email</p>
+        } 
+    }
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Empresa?.Id">Editar</a>
     <a asp-page="ListEmpresas">Voltar</a>
 </div>
