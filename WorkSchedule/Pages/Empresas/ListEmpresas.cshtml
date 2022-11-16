@@ -10,43 +10,52 @@
 <p>
     <a asp-page="Empresas">Adicione uma empresa</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Empresa[0].razaoSocial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empresa[0].cnpj)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Empresa[0].status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Empresa) {
-        var status = item.status == 1 ? "Ativo" : "Inativo";
-        <form method="post">
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.razaoSocial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cnpj)
-            </td>
-            <td>
-                @status
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-page="./detailsEmpresa" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-page="./deleteEmpresa" asp-route-id="@item.Id">Excluir</a>
-            </td>
-        </tr>
+@if(Model.Empresa.Count > 0)
+    {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Empresa[0].razaoSocial)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Empresa[0].cnpj)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Empresa[0].status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            @foreach (var item in Model.Empresa) {
+                var status = item.status == 1 ? "Ativo" : "Inativo";
+                <form method="post">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.razaoSocial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cnpj)
+                    </td>
+                    <td>
+                        @status
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-page="./detailsEmpresa" asp-route-id="@item.Id">Detalhes</a> |
+                        <a asp-page="./deleteEmpresa" asp-route-id="@item.Id">Excluir</a>
+                    </td>
+                </tr>
 
-        </form>
-    }
-    </tbody>
-</table>
+                </form>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3>Não há empresas</h3>
+    <p>Cadastre a sua ou complete seu cadastro</p>
+}

@@ -12,7 +12,7 @@ using WorkSchedule.Models;
 
 namespace WorkSchedule.Pages.Empresas
 {
-    [Authorize(Roles = "Empresa")]
+    [Authorize(Roles = "Empresa, Admin")]
     public class detailsEmpresaModel : PageModel
     {
         private readonly WorkSchedule.Data.ApplicationDbContext _context;

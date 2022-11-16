@@ -44,7 +44,7 @@ namespace WorkSchedule.Pages
             }
             else
             {
-                if (_context.empresa != null)
+                if (_context.empresa != null && user.empresa != null)
                 {
                     Empresa.Add(user.empresa);
                 }
