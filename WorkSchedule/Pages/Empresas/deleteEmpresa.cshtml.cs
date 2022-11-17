@@ -49,16 +49,26 @@ namespace WorkSchedule.Pages.Empresas
                 return NotFound();
             }
             var empresa = await _context.empresa.FindAsync(id);
+            var users = await _context.user.Where(x => x.empresa == empresa).ToListAsync();
 
             if (empresa != null)
             {
                 empresa.status = -1;
                 Empresa = empresa;
                 _context.empresa.Update(Empresa);
+
+                if(users != null)
+                {
+                    foreach (var user in users)
+                    {
+                        user.empresa = null;
+                    }
+                    _context.UpdateRange(users);
+                }
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ListEmpresas");
         }
     }
 }

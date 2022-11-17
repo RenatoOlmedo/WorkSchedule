@@ -66,7 +66,7 @@ namespace WorkSchedule.Pages.Empresas
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ListEmpresas");
         }
 
         private bool EmpresaExists(int id)

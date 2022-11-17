@@ -64,5 +64,15 @@ namespace WorkSchedule.Pages.Empresas
             }
             return Page();
         }
+
+        public async Task<IActionResult> OnPostAsync(string? id)
+        {
+            var user = await _context.user.Where(x => x.Id == id).Include(x => x.empresa).FirstOrDefaultAsync();
+            user.empresa = null;
+            _context.user.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./ListEmpresas");
+        }
+
     }
 }

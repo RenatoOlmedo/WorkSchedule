@@ -35,11 +35,15 @@
     }
     else
     {
+        <form method="post">
+
         @foreach(var gestor in Model.gestor)
         {
             <p>@gestor.Email</p>
+            <button type="submit" asp-route-id="@gestor.Id">Desvincular</button>
         }
         <hr />
+        </form>
     }
         
     <h4>Funcionários</h4>
@@ -49,13 +53,18 @@
     }
     else
     {
+        <form method="post">
+
        @foreach (var funcionario in Model.funcionario)
         {
             <p>@funcionario.Email</p>
+            <button type="submit" asp-route-id="@funcionario.Id">Desvincular</button>
         } 
+        </form>
+
     }
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Empresa?.Id">Editar</a>
+    <a asp-page="./updateEmpresa" asp-route-id="@Model.Empresa?.Id">Editar</a>
     <a asp-page="ListEmpresas">Voltar</a>
 </div>
