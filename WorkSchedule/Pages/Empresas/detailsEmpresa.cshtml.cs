@@ -73,6 +73,5 @@ namespace WorkSchedule.Pages.Empresas
             await _context.SaveChangesAsync();
             return RedirectToPage("./ListEmpresas");
         }
-
     }
 }

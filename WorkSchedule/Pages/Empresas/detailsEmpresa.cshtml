@@ -4,7 +4,9 @@
 @{
     ViewData["Title"] = "Detalhes da empresa";
 }
-
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
 <h1>Detalhes</h1>
 
 <div>
@@ -27,42 +29,54 @@
         </tbody>
     </table>
 </div>
-<div>
-    <h4>Gestores</h4>
-    @if (!Model.gestor.Any())
-    {
-        <p>Não há gestores vinculados</p>
-    }
-    else
-    {
-        <form method="post">
-
-        @foreach(var gestor in Model.gestor)
+<div class="d-flex">
+    <div class="row">
+        <h4>Gestores</h4>
+        @if (!Model.gestor.Any())
         {
-            <p>@gestor.Email</p>
-            <button type="submit" asp-route-id="@gestor.Id">Desvincular</button>
+            <p>Não há gestores vinculados</p>
         }
-        <hr />
-        </form>
-    }
-        
-    <h4>Funcionários</h4>
-    @if (!Model.funcionario.Any())
-    {
-        <p>Não há funcionários vinculados</p>
-    }
-    else
-    {
-        <form method="post">
-
-       @foreach (var funcionario in Model.funcionario)
+        else
         {
-            <p>@funcionario.Email</p>
-            <button type="submit" asp-route-id="@funcionario.Id">Desvincular</button>
-        } 
-        </form>
+            <form method="post">
+            @foreach(var gestor in Model.gestor)
+            {
+                <div class="align-content-start">
+                    <p>@gestor.Email</p>
+                </div>
+                <div class="align-content-end">
+                    <button class="" type="submit" asp-route-id="@gestor.Id"><i class="bi bi-trash-fill"></i></button>
+                </div>
+            }
+            <hr />
+            </form>
+        }
+    </div>
+    
+    <div class="row">
+        <h4>Funcionários</h4>
+        @if (!Model.funcionario.Any())
+        {
+            <p>Não há funcionários vinculados</p>
+        }
+        else
+        {
+            <form method="post">
 
-    }
+           @foreach (var funcionario in Model.funcionario)
+            {
+                <div class="align-content-start">
+                    <p>@funcionario.Email</p>
+                </div>
+                <div class="align-content-end">
+                    <button class="" type="submit" asp-route-id="@funcionario.Id"><i class="bi bi-trash-fill"></i></button>
+                </div>
+            } 
+            </form>
+
+        }
+    </div> 
+    
 </div>
 <div>
     <a asp-page="./updateEmpresa" asp-route-id="@Model.Empresa?.Id">Editar</a>

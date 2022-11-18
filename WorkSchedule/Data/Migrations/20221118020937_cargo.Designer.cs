@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkSchedule.Data;
 
@@ -11,9 +12,10 @@ using WorkSchedule.Data;
 namespace WorkSchedule.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221118020937_cargo")]
+    partial class cargo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,34 +228,6 @@ namespace WorkSchedule.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WorkSchedule.Models.Cargo", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int?>("horasDescanso")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("horasTrabalho")
-                        .HasColumnType("int");
-
-                    b.Property<string>("nomeCargo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("tipoEscala")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("cargo");
-                });
-
             modelBuilder.Entity("WorkSchedule.Models.Empresa", b =>
                 {
                     b.Property<int>("Id")
@@ -278,12 +252,34 @@ namespace WorkSchedule.Data.Migrations
                     b.ToTable("empresa");
                 });
 
+            modelBuilder.Entity("WorkSchedule.Models.Cargo", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int?>("horasDescanso")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("horasTrabalho")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nomeCargo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tipoEscala")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Cargo");
+                });
+
             modelBuilder.Entity("WorkSchedule.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("cargoid")
-                        .HasColumnType("int");
+                    b.Property<string>("cargoId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("empresaId")
                         .HasColumnType("int");
@@ -293,9 +289,10 @@ namespace WorkSchedule.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("status")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("User_status");
 
-                    b.HasIndex("cargoid");
+                    b.HasIndex("cargoId");
 
                     b.HasIndex("empresaId");
 
@@ -357,7 +354,7 @@ namespace WorkSchedule.Data.Migrations
                 {
                     b.HasOne("WorkSchedule.Models.Cargo", "cargo")
                         .WithMany()
-                        .HasForeignKey("cargoid");
+                        .HasForeignKey("cargoId");
 
                     b.HasOne("WorkSchedule.Models.Empresa", "empresa")
                         .WithMany()

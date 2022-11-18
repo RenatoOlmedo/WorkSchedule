@@ -1,0 +1,62 @@
+﻿@page
+@model WorkSchedule.Pages.Cargo.listCargoModel
+
+@{
+    ViewData["Title"] = "Cargos";
+}
+
+<h1>listCargo</h1>
+
+<p>
+    <a asp-page="CreateCargo">Adicionar cargo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Tipo de escala
+            </th>
+            <th>
+                Horas de trabalho
+            </th>
+            <th>
+                Horas de descanso
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Cargo) {
+            var statusListagem = item.status == 1 ? "Ativo" : "Inativo";
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeCargo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoEscala)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horasTrabalho)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horasDescanso)
+            </td>
+            <td>
+                @statusListagem
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Editar</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Detalhes</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Desativar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

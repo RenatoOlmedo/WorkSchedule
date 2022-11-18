@@ -1,0 +1,49 @@
+﻿@page
+@model WorkSchedule.Pages.Cargo.CreateCargoModel
+
+@{
+    ViewData["Title"] = "CreateCargo";
+}
+
+<h1>CreateCargo</h1>
+
+<h4>Cargo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="cargo.nomeCargo" class="control-label">Cargo</label>
+                <input asp-for="cargo.nomeCargo" class="form-control" />
+                <span asp-validation-for="cargo.nomeCargo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cargo.tipoEscala" class="control-label">Tipo de escala</label>
+                <input asp-for="cargo.tipoEscala" class="form-control" />
+                <span asp-validation-for="cargo.tipoEscala" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cargo.horasTrabalho" class="control-label">Horas de trabalho</label>
+                <input asp-for="cargo.horasTrabalho" class="form-control" />
+                <span asp-validation-for="cargo.horasTrabalho" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cargo.horasDescanso" class="control-label">Horas de descanso</label>
+                <input asp-for="cargo.horasDescanso" class="form-control" />
+                <span asp-validation-for="cargo.horasDescanso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

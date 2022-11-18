@@ -12,5 +12,6 @@ namespace WorkSchedule.Data
         }
         public DbSet<User> user { get; set; }
         public DbSet<Empresa> empresa { get; set; }
+        public DbSet<Cargo> cargo { get; set; }
     }
 }
