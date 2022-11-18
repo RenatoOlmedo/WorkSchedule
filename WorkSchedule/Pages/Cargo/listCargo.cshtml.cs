@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,21 +12,40 @@ using WorkSchedule.Models;
 
 namespace WorkSchedule.Pages.Cargo
 {
+    [Authorize(Roles = "Empresa, Admin")]
     public class listCargoModel : PageModel
     {
+        private readonly UserManager<User> _userManager;
         private readonly WorkSchedule.Data.ApplicationDbContext _context;
-        public listCargoModel(WorkSchedule.Data.ApplicationDbContext context)
+        public listCargoModel(WorkSchedule.Data.ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
-        public IList<Models.Cargo> Cargo { get;set; } = default!;
-
+        public List<Models.Cargo> cargos { get; set; }
+        public bool precisaVincularEmpresa { get; set; }
         public async Task OnGetAsync()
         {
-            if (_context.cargo != null)
+            cargos = new List<Models.Cargo>();
+
+            var user = await _userManager.GetUserAsync(User);
+            user = await _context.user.Where(x => x.Id == user.Id).Include(x => x.empresa).FirstOrDefaultAsync();
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("Admin"))
             {
-                Cargo = await _context.cargo.ToListAsync();
+                cargos = await _context.cargo.ToListAsync();
+            }
+            else
+            {
+                if (user.empresa != null)
+                {
+                    var cargosEmpresa = await _context.cargo.Where(x => x.empresa == user.empresa).ToListAsync();
+                    cargos = cargosEmpresa;
+                }
+                else
+                    precisaVincularEmpresa = true;
             }
         }
     }

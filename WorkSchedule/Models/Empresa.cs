@@ -11,5 +11,6 @@ namespace WorkSchedule.Models
         [Required (ErrorMessage = "Insira o cnpj para cadastrar a empresa")]
         public string cnpj { get; set; }
         public int status { get; set; } = 1;
+        public List<Cargo>? cargos { get; set; }
     }
 }

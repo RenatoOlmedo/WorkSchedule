@@ -12,5 +12,6 @@ namespace WorkSchedule.Models
         public int? horasTrabalho { get; set; }
         public int? horasDescanso { get; set; }
         public int status { get; set; } = 1;
+        public Empresa empresa { get; set; }
     }
 }
