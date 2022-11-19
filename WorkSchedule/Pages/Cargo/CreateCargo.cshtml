@@ -33,15 +33,26 @@
                 <input asp-for="cargo.horasDescanso" class="form-control" />
                 <span asp-validation-for="cargo.horasDescanso" class="text-danger"></span>
             </div>
+            @if(Model.empresas != null && Model.admin)
+                {
+                    <select name="empresaId">
+                        <option value="">Selecione a empresa do cargo criado</option>
+                    @foreach(var empresa in Model.empresas)
+                    {
+                        <option value="@empresa.Id">@empresa.razaoSocial</option>
+                    }
+                    </select>
+                }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <input type="hidden" asp-for="cargo.status" value="1" class="form-control" />
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="listCargo">Voltar</a>
 </div>
 
 @section Scripts {

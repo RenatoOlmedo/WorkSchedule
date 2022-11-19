@@ -24,27 +24,41 @@ namespace WorkSchedule.Pages.Cargo
             _context = context;
             _userManager = userManager;
         }
+        public List<Empresa> empresas { get; set; }
+        public bool admin { get; set; }=false;
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Contains("Admin"))
+            {
+                admin = true;
+            }
+
+            empresas = await _context.empresa.Where(x => x.status == 1).ToListAsync();
             return Page();
         }
 
         [BindProperty]
         public Models.Cargo cargo { get; set; }
-        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? empresaId)
         {
             var user = await _userManager.GetUserAsync(User);
             user = await _context.user.Where(x => x.Id == user.Id).Include(x => x.empresa).FirstOrDefaultAsync();
 
-            if (!ModelState.IsValid)
+            if (empresaId != null)
             {
-                return Page();
+                var empresa = await _context.empresa.Where(x => x.status == 1 && x.Id == empresaId).FirstOrDefaultAsync();
+                cargo.empresa = empresa;
             }
-            cargo.empresa = user.empresa;
+            else
+            {
+                cargo.empresa = user.empresa;
+            }
+
             _context.cargo.Add(cargo);
             await _context.SaveChangesAsync();
 
