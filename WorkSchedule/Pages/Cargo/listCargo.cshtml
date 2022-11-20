@@ -63,9 +63,9 @@ else
                         @statusListagem
                     </td>
                     <td>
-                        <a asp-page="./Edit" asp-route-id="@item.id">Editar</a> |
-                        <a asp-page="./Details" asp-route-id="@item.id">Detalhes</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.id">Desativar</a>
+                        <a asp-page="./updateCargo" asp-route-id="@item.id">Editar</a> |
+                        @*<a asp-page="./Details" asp-route-id="@item.id">Detalhes</a> |*@
+                        <a asp-page="./deleteCargo" asp-route-id="@item.id">Desativar</a>
                     </td>
                 </tr>
         }

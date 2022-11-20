@@ -41,7 +41,7 @@ namespace WorkSchedule.Pages.Cargo
             {
                 if (user.empresa != null)
                 {
-                    var cargosEmpresa = await _context.cargo.Where(x => x.empresa == user.empresa).ToListAsync();
+                    var cargosEmpresa = await _context.cargo.Where(x => x.empresa == user.empresa && x.status == 1).ToListAsync();
                     cargos = cargosEmpresa;
                 }
                 else
