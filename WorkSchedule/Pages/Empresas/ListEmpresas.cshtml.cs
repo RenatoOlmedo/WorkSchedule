@@ -17,6 +17,7 @@ namespace WorkSchedule.Pages
     {
         private readonly WorkSchedule.Data.ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        public bool isAdmin { get; set; } = false;
 
         public ListEmpresasModel(WorkSchedule.Data.ApplicationDbContext context, UserManager<User> userManager)
         {
@@ -37,6 +38,7 @@ namespace WorkSchedule.Pages
 
             if (roles.Contains("Admin"))
             {
+                isAdmin = true;
                 if (_context.empresa != null)
                 {
                     Empresa = await _context.empresa.ToListAsync();

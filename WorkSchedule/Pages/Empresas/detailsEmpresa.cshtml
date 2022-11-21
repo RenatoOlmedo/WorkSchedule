@@ -29,8 +29,8 @@
         </tbody>
     </table>
 </div>
-<div class="d-flex">
-    <div class="row">
+<div class="d-flex flex-column justify-content-center">
+    <div class="">
         <h4>Gestores</h4>
         @if (!Model.gestor.Any())
         {
@@ -41,19 +41,16 @@
             <form method="post">
             @foreach(var gestor in Model.gestor)
             {
-                <div class="align-content-start">
-                    <p>@gestor.Email</p>
-                </div>
-                <div class="align-content-end">
-                    <button class="" type="submit" asp-route-id="@gestor.Id"><i class="bi bi-trash-fill"></i></button>
+                <div class="d-inline">
+                    <label>@gestor.Email</label><label>@gestor.cargo</label><button class="bg-warring" type="submit" asp-route-id="@gestor.Id"><i class="bi bi-trash-fill"></i></button>
                 </div>
             }
-            <hr />
+            <hr/>
             </form>
         }
     </div>
     
-    <div class="row">
+    <div class="">
         <h4>Funcionários</h4>
         @if (!Model.funcionario.Any())
         {
@@ -65,18 +62,39 @@
 
            @foreach (var funcionario in Model.funcionario)
             {
-                <div class="align-content-start">
+                <div class="d-inline">
                     <p>@funcionario.Email</p>
+                    <p>@funcionario.cargo</p>
+                    <button class="bg-warring" type="submit" asp-route-id="@funcionario.Id"><i class="bi bi-trash-fill"></i></button>
                 </div>
-                <div class="align-content-end">
-                    <button class="" type="submit" asp-route-id="@funcionario.Id"><i class="bi bi-trash-fill"></i></button>
+            } 
+            <hr/>
+            </form>
+
+        }
+    </div> 
+    
+    <div class="">
+        <h4>Cargos</h4>
+        @if (!Model.cargos.Any())
+        {
+            <p>Não há cargos vinculados</p>
+        }
+        else
+        {
+            <form method="post">
+
+           @foreach (var cargo in Model.cargos)
+            {
+                <div class="">
+                    <p>@cargo.nomeCargo</p>
+                    <p>@cargo.tipoEscala</p>
                 </div>
             } 
             </form>
 
         }
     </div> 
-    
 </div>
 <div>
     <a asp-page="./updateEmpresa" asp-route-id="@Model.Empresa?.Id">Editar</a>

@@ -27,6 +27,7 @@ namespace WorkSchedule.Pages.Empresas
         public Empresa Empresa { get; set; }
         public List<User> gestor { get; set; }
         public List<User> funcionario { get; set; }
+        public List<Models.Cargo> cargos { get; set; }
         public string status { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -37,12 +38,16 @@ namespace WorkSchedule.Pages.Empresas
             }
 
             var empresa = await _context.empresa.FirstOrDefaultAsync(m => m.Id == id);
+            
             if (empresa == null)
             {
                 return NotFound();
             }
             else 
             {
+                cargos = new List<Models.Cargo>();
+                cargos = await _context.cargo.Where(x => x.empresa == empresa && x.status == 1).ToListAsync();
+
                 gestor = new List<User>();
                 funcionario = new List<User>();
 

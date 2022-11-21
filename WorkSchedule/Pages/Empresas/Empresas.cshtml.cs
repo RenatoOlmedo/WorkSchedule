@@ -45,6 +45,7 @@ namespace WorkSchedule.Pages
             user.empresa = Empresa;
             _context.Update(user);
 
+            await _userManager.AddToRoleAsync(user, "AdmEmpresa");
             await _context.SaveChangesAsync();
 
 

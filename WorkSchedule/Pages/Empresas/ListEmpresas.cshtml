@@ -7,9 +7,13 @@
 
 <h1>Lista de empresas</h1>
 
-<p>
+@if (Model.isAdmin)
+{
+  <p>
     <a asp-page="Empresas">Adicione uma empresa</a>
-</p>
+  </p>  
+}
+
 @if(Model.Empresa.Count > 0)
     {
     <table class="table">
@@ -56,6 +60,9 @@
 }
 else
 {
+    <p>
+        <a asp-page="Empresas">Adicione uma empresa</a>
+    </p>
     <h3>Não há empresas</h3>
     <p>Cadastre a sua ou complete seu cadastro</p>
 }
