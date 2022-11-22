@@ -49,8 +49,10 @@
                     <td>
                         <a asp-page="./updateEmpresa" asp-route-id="@item.Id">Editar</a> |
                         <a asp-page="./detailsEmpresa" asp-route-id="@item.Id">Detalhes</a> |
-                        @if(Model.isAdmin || (Model.isEmpresa && Model.isAdmEmpresa))
-                        <a asp-page="./deleteEmpresa" asp-route-id="@item.Id">Desativar</a>
+                            @if(Model.isAdmin || (Model.isEmpresa && Model.isAdmEmpresa))
+                            {
+                            <a asp-page="./deleteEmpresa" asp-route-id="@item.Id">Desativar</a>
+                            }
                     </td>
                 </tr>
 
