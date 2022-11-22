@@ -18,6 +18,8 @@ namespace WorkSchedule.Pages
         private readonly WorkSchedule.Data.ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         public bool isAdmin { get; set; } = false;
+        public bool isEmpresa { get; set; } = false;
+        public bool isAdmEmpresa { get; set; } = false;
 
         public ListEmpresasModel(WorkSchedule.Data.ApplicationDbContext context, UserManager<User> userManager)
         {
@@ -46,7 +48,12 @@ namespace WorkSchedule.Pages
             }
             else
             {
-                if (_context.empresa != null && user.empresa != null)
+                isEmpresa = true;
+                if (roles.Contains("AdmEmpresa"))
+                {
+                    isAdmEmpresa = true;
+                }
+                    if (_context.empresa != null && user.empresa != null)
                 {
                     Empresa.Add(user.empresa);
                 }
