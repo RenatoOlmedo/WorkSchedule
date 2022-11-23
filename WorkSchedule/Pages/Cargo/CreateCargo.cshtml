@@ -2,7 +2,7 @@
 @model WorkSchedule.Pages.Cargo.CreateCargoModel
 
 @{
-    ViewData["Title"] = "CreateCargo";
+    ViewData["Title"] = "Novo Cargo";
 }
 
 <h4>Cargo</h4>
@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>s
             <div class="form-group">
                 <label asp-for="cargo.nomeCargo" class="control-label">Cargo</label>
                 <input asp-for="cargo.nomeCargo" class="form-control" />
