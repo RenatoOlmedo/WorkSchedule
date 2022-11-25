@@ -12,5 +12,6 @@ namespace WorkSchedule.Models
         public string cnpj { get; set; }
         public int status { get; set; } = 1;
         public List<Cargo>? cargos { get; set; }
+        public List<Escala>? escalas { get; set; }
     }
 }
