@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using WorkSchedule.Models;
 
 namespace WorkSchedule.Pages.Cargo
 {
+    [Authorize(Roles = "Empresa, Admin")]
     public class deleteCargoModel : PageModel
     {
         private readonly WorkSchedule.Data.ApplicationDbContext _context;
