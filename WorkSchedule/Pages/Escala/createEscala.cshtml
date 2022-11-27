@@ -1,0 +1,133 @@
+﻿@page
+@model WorkSchedule.Pages.Escala.createEscalaModel
+
+@{
+    ViewData["Title"] = "Adicionar escala";
+}
+
+<h4>Escala</h4>
+<hr />
+
+<h3>Mês</h3>
+<select>
+    <option value="" disabled selected>Selecione o mês da escala</option>
+    <option value="1" disabled>Janeiro</option>
+    <option value="2" disabled>Fevereiro</option>
+    <option value="3" disabled>Março</option>
+    <option value="4" disabled>Abril</option>
+    <option value="5" disabled>Maio</option>
+    <option value="6" disabled>Junho</option>
+    <option value="7" disabled>Julho</option>
+    <option value="8" disabled>Agosto</option>
+    <option value="9" disabled>Setembro</option>
+    <option value="10" disabled>Outubro</option>
+    <option value="11">Novembro</option>
+    <option value="12" disabled>Dezembro</option>
+</select>
+
+<h3>Padrão</h3>
+<select>
+    <option value="" disabled>Selecione o padrão de escala</option>
+    <option value="6x1">6 x 1</option>
+    <option value="5x2" disabled>5 x 2</option>
+</select>
+
+<h3>Quantidade de funcionários</h3>
+<select>
+    <option value="" disabled>Selecione a quantidade de funcionários</option>
+    <option value="2">2 funcionário</option>
+    <option value="3">3 funcionário</option>
+    <option value="4">4 funcionário</option>
+    <option value="5">5 funcionário</option>
+</select>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Domingo</th>
+            <th>Segunda-Feira</th>
+            <th>Terça-Feira</th>
+            <th>Quarta-Feira</th>
+            <th>Quinta-Feira</th>
+            <th>Sexta-Feira</th>
+            <th>Sábado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>30</td>
+            <td>31</td>
+            <td>01</td>
+            <td>02</td>
+            <td>03</td>
+            <td>04</td>
+            <td>05</td>
+        </tr>
+        <tr>
+            <td>06</td>
+            <td>07</td>
+            <td>08</td>
+            <td>09</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+            <td>26</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td>30</td>
+            <td>01</td>
+            <td>02</td>
+            <td>03</td>
+        </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Escala.idPessoaEscala" class="conthol-label"></label>
+                <input asp-for="Escala.idPessoaEscala" class="form-conthol" />
+                <span asp-validation-for="Escala.idPessoaEscala" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Escala.mes" class="conthol-label"></label>
+                <input asp-for="Escala.mes" class="form-conthol" />
+                <span asp-validation-for="Escala.mes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

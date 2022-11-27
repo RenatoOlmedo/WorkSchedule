@@ -21,13 +21,13 @@ namespace WorkSchedule.Pages.Escala
             _context = context;
         }
 
-        public IList<Models.Escala> escala { get;set; } = default!;
+        public IList<Models.Empresa> empresa { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Escala != null)
             {
-                escala = await _context.Escala.ToListAsync();
+                empresa = await _context.empresa.Where(x => x.escalas != null).Include(x => x.escalas).ToListAsync();
             }
         }
     }
