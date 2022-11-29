@@ -51,8 +51,45 @@ namespace WorkSchedule.Pages.Escala
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(int? formQntFuncionarios, string? formFunc1, string? formFunc2, string? formFunc3, string? formFunc4, string? formFunc5, int? formEmpresa)
         {
+            if (formEmpresa != null)
+            {
+                var empresa = await _context.empresa.Where(x => x.Id == formEmpresa).FirstOrDefaultAsync();
+                List<Models.Escala> escalasNovas = new List<Models.Escala>();
+                
+                if (formFunc1 != null)
+                {
+                    var user1 = await _context.user.Where(x => x.Id == formFunc1).FirstOrDefaultAsync();
+                    var escala1 = new Models.Escala() { usuario = user1, empresa = empresa, mes = 11, idPessoaEscala = 1 };
+                    escalasNovas.Add(escala1);
+                }
+                if (formFunc2 != null)
+                {
+                    var user2 = await _context.user.Where(x => x.Id == formFunc2).FirstOrDefaultAsync();
+                    var escala2 = new Models.Escala() { usuario = user2, empresa = empresa, mes = 11, idPessoaEscala = 2 };
+                    escalasNovas.Add(escala2);
+                }
+                if (formFunc3 != null)
+                {
+                    var user3 = await _context.user.Where(x => x.Id == formFunc1).FirstOrDefaultAsync();
+                    var escala3 = new Models.Escala() { usuario = user3, empresa = empresa, mes = 11, idPessoaEscala = 3 };
+                    escalasNovas.Add(escala3);
+                }
+                if (formFunc4 != null)
+                {
+                    var user4 = await _context.user.Where(x => x.Id == formFunc1).FirstOrDefaultAsync();
+                    var escala4 = new Models.Escala() { usuario = user4, empresa = empresa, mes = 11, idPessoaEscala = 4 };
+                    escalasNovas.Add(escala4);
+                }
+                if (formFunc5 != null)
+                {
+                    var user5 = await _context.user.Where(x => x.Id == formFunc1).FirstOrDefaultAsync();
+                    var escala5 = new Models.Escala() { usuario = user5, empresa = empresa, mes = 11, idPessoaEscala = 1 };
+                    escalasNovas.Add(escala5);
+                }
 
-
+                await _context.Escala.AddRangeAsync(escalasNovas);
+                await _context.SaveChangesAsync();
+            };
             return RedirectToPage("./listEscala");
         }
     }

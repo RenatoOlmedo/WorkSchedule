@@ -92,7 +92,7 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string telefone, int? empresaId, string tipo_pessoa)
+        public async Task<IActionResult> OnPostAsync(string telefone, int? empresaId, string tipo_pessoa, string? nomeCompleto)
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -115,6 +115,12 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             {
                 var empresa = await _db.empresa.Where(x => x.Id == empresaId).FirstOrDefaultAsync();
                 user.empresa = empresa;
+                _db.user.Update(user);
+                await _db.SaveChangesAsync();
+            }
+            if (nomeCompleto != null)
+            {
+                user.nomeCompleto = nomeCompleto;
                 _db.user.Update(user);
                 await _db.SaveChangesAsync();
             }

@@ -2,30 +2,93 @@
 @model WorkSchedule.Pages.Escala.detailsEscalaModel
 
 @{
-    ViewData["Title"] = "detailsEscala";
+    ViewData["Title"] = "Escala";
 }
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/js/detailsEscala.js"></script>
+</head>
 
-<h1>detailsEscala</h1>
-
+@if(Model.escalas.Where(x => x.idPessoaEscala == 1).Any()){
+    <input class="pessoa" type="hidden" value="@Model.escalas.Where(x => x.idPessoaEscala == 1).FirstOrDefault().usuario.nomeCompleto" id="p1" />
+}
+@if(Model.escalas.Where(x => x.idPessoaEscala == 2).Any()){
+    <input class="pessoa" type="hidden" value="@Model.escalas.Where(x => x.idPessoaEscala == 2).FirstOrDefault().usuario.nomeCompleto" id="p2" />
+}
+@if(Model.escalas.Where(x => x.idPessoaEscala == 3).Any()){
+    <input class="pessoa" type="hidden" value="@Model.escalas.Where(x => x.idPessoaEscala == 3).FirstOrDefault().usuario.nomeCompleto" id="p3" />
+}
+@if(Model.escalas.Where(x => x.idPessoaEscala == 4).Any()){
+    <input class="pessoa" type="hidden" value="@Model.escalas.Where(x => x.idPessoaEscala == 4).FirstOrDefault().usuario.nomeCompleto" id="p4" />
+}
+@if(Model.escalas.Where(x => x.idPessoaEscala == 5).Any()){
+    <input class="pessoa" type="hidden" value="@Model.escalas.Where(x => x.idPessoaEscala == 5).FirstOrDefault().usuario.nomeCompleto" id="p5" />
+}
 <div>
     <h4>Escala</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Escala.idPessoaEscala)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Escala.idPessoaEscala)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Escala.mes)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Escala.mes)
-        </dd>
-    </dl>
+    <table class="table d-none" id="escala">
+    <h4 class="justify-content-center">Novembro</h4>
+        <thead>
+            <tr>
+                <th>Domingo</th>
+                <th>Segunda-Feira</th>
+                <th>Terça-Feira</th>
+                <th>Quarta-Feira</th>
+                <th>Quinta-Feira</th>
+                <th>Sexta-Feira</th>
+                <th>Sábado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>30</td>
+                <td>31</td>
+                <td>01<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>02<br /><span class="p1"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>03<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>04<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p5"></span></td>
+                <td>05<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span></td>
+            </tr>
+            <tr>
+                <td>06<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>07<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>08<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>09<br /><span class="p1"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>10<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>11<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p5"></span></td>
+                <td>12<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span></td>
+            </tr>
+            <tr>
+                <td>13<br /><span class="p1"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>14<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>15<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>16<br /><span class="p1"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>17<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>18<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p5"></span></td>
+                <td>19<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span></td>
+            </tr>
+            <tr>
+                <td>20<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>21<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>22<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>23<br /><span class="p1"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>24<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>25<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p5"></span></td>
+                <td>26<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span></td>
+            </tr>
+            <tr>
+                <td>27<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></td>
+                <td>28<br /><span class="p1"></span><br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"><br /><span class="p5"></span></td>
+                <td>29<br /><span class="p2"></span><br /><span class="p3"></span><br /><span class="p4"></span><br /><span class="p5"></span></td>
+                <td>30</td>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Escala?.id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./listEscala">Voltar</a>
 </div>

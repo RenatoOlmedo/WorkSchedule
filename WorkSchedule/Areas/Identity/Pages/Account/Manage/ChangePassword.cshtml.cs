@@ -122,7 +122,7 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            return RedirectToPage();
+            return RedirectToPage("./Index");
         }
     }
 }
