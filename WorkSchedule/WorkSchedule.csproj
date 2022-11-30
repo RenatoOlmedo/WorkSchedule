@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\perfil.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\perfil.js" />
     <None Include="wwwroot\js\createEscala.js" />
   </ItemGroup>
 

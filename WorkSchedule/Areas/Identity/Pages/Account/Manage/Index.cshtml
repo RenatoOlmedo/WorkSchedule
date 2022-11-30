@@ -1,36 +1,54 @@
-﻿@page
+﻿                                @page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Perfil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/js/perfil.js"></script>
+</head>
 
-<h3>@ViewData["Title"]</h3>
+<h3 id="titlePage"></h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
-            <input name="nomeCompleto" placeholder="José da Silva" type="text" />
+            <input type="hidden" id="role" value="@Model.role"/>
+            <input type="hidden" id="empresa" value="@Model.usuario.empresa"/>
+
+            <input id="nomeCompleto" name="nomeCompleto" placeholder="José da Silva" type="text"  value="@Model.usuario.nomeCompleto"/>
             <br />
-            <input name="telefone" placeholder="(11)987565-4321" type="text" />
+            <input name="telefone" placeholder="(11)987565-4321" type="text" value="@Model.usuario.PhoneNumber"/>
             <br />
-            <label>Selecione o tipo de profissional</label><br />
-            <input type="radio" id="empresario" name="tipo_pessoa" value="Empresa">
+            
+            <label>Tipo de usuario</label><br />
+            <input type="radio" id="empresario" name="tipo_pessoa" value="Empresa">
             <label for="empresario">Empresário</label><br>
             <input type="radio" id="funcionario" name="tipo_pessoa" value="Funcionario">
             <label for="funcionario">Funcionário</label><br>
+            
            <br />
+            @if(Model.usuario.empresa != null)
+            {
+                <select disabled name="empresaId">
+                    <option selected disabled value="@Model.usuario.empresa.Id">@Model.usuario.empresa.razaoSocial</option>
+                </select>
+            }
+            else
+            {
                 @if(Model.empresas != null)
                 {
-                    <select name="empresaId">
+                    <select name="empresaId" id="suaEmpresa" class="d-none">
                         <option value="">Selecione sua empresa</option>
-                    @foreach(var empresa in Model.empresas)
+                    @foreach(var emp in Model.empresas)
                     {
-                        <option value="@empresa.Id">@empresa.razaoSocial</option>
+                        <option value="@emp.Id">@emp.razaoSocial</option>
                     }
                     </select>
                 }
-                <a asp-page="/Empresas">Cadastre sua empresa</a>
+                @*<a id="cadastroEmpresa" asp-page="/Empresas">Cadastre sua empresa</a>*@
+            }
             
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Salvar</button>
         </form>

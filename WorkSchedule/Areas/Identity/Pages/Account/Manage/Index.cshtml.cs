@@ -22,6 +22,8 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
         private readonly ApplicationDbContext _db;
 
         public List<Empresa> empresas { get; set; }
+        public Models.User usuario { get; set; }
+        public string role { get; set; }
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
@@ -82,53 +84,64 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            usuario = await _userManager.GetUserAsync(User);
+            usuario = await _db.user.Where(x => x.Id == usuario.Id).Include(x => x.empresa).FirstOrDefaultAsync();
+            if (usuario == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            var roles = await _userManager.GetRolesAsync(usuario);
+            if (roles.Contains("Empresa"))
+            {
+                role = "empresa";
+            }
+            if (roles.Contains("Funcionario"))
+            {
+                role = "funcionario";
+            }
             empresas = _db.empresa.Where(x => x.status ==1).ToList();
-            await LoadAsync(user);
+            await LoadAsync(usuario);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string telefone, int? empresaId, string tipo_pessoa, string? nomeCompleto)
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
+            usuario = await _userManager.GetUserAsync(User);
+            usuario = await _db.user.Where(x => x.Id == usuario.Id).FirstOrDefaultAsync();
+            
+            if (usuario == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                await LoadAsync(usuario);
                 return Page();
             }
 
             if (!String.IsNullOrEmpty(tipo_pessoa))
             {
-                await _userManager.AddToRoleAsync(user, tipo_pessoa);
+                await _userManager.AddToRoleAsync(usuario, tipo_pessoa);
             }
 
             if (empresaId.HasValue)
             {
                 var empresa = await _db.empresa.Where(x => x.Id == empresaId).FirstOrDefaultAsync();
-                user.empresa = empresa;
-                _db.user.Update(user);
+                usuario.empresa = empresa;
+                _db.user.Update(usuario);
                 await _db.SaveChangesAsync();
             }
             if (nomeCompleto != null)
             {
-                user.nomeCompleto = nomeCompleto;
-                _db.user.Update(user);
+                usuario.nomeCompleto = nomeCompleto;
+                _db.user.Update(usuario);
                 await _db.SaveChangesAsync();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(usuario);
             if (telefone != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(usuario, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Erro inesperado tentado alterar seu telefone.";
@@ -136,8 +149,12 @@ namespace WorkSchedule.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            await _signInManager.RefreshSignInAsync(user);
+            await _signInManager.RefreshSignInAsync(usuario);
             StatusMessage = "Seu perfil foi atualizado";
+            if(tipo_pessoa == "Empresa")
+            {
+                return Redirect("/Empresas/ListEmpresas");
+            }
             return RedirectToPage();
         }
     }
