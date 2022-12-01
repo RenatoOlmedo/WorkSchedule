@@ -73,6 +73,10 @@ namespace WorkSchedule.Pages.Empresas
         public async Task<IActionResult> OnPostAsync(string? id)
         {
             var user = await _context.user.Where(x => x.Id == id).Include(x => x.empresa).FirstOrDefaultAsync();
+
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
+
             user.empresa = null;
             _context.user.Update(user);
             await _context.SaveChangesAsync();

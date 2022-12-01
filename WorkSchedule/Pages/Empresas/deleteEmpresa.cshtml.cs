@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,13 @@ namespace WorkSchedule.Pages.Empresas
     [Authorize(Roles = "Empresa, Admin")]
     public class deleteEmpresaModel : PageModel
     {
+        private readonly UserManager<User> _userManager;
         private readonly WorkSchedule.Data.ApplicationDbContext _context;
 
-        public deleteEmpresaModel(WorkSchedule.Data.ApplicationDbContext context)
+        public deleteEmpresaModel(WorkSchedule.Data.ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -52,6 +55,12 @@ namespace WorkSchedule.Pages.Empresas
             }
             var empresa = await _context.empresa.FindAsync(id);
             var users = await _context.user.Where(x => x.empresa == empresa).ToListAsync();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
+            }
 
             if (empresa != null)
             {

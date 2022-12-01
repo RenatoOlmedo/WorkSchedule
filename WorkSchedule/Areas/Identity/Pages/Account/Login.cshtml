@@ -4,6 +4,22 @@
 @{
     ViewData["Title"] = "Login";
 }
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcmsUgjAAAAABs4ypv8HjuGCX8RjT1V92d7288f"></script>
+
+<script>
+    $( document ).ready(function() {
+      $("#login-button").click(function() {
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6LcmsUgjAAAAABs4ypv8HjuGCX8RjT1V92d7288f', {action: 'submit'}).then(function(token) {
+              console.log(token);
+              $("#tokenInput").val(token);
+              $("#login-submit").click();
+          });
+        });
+      });
+    });
+  </script>
 
 <h1>@ViewData["Title"]</h1>
 <div class="row">
@@ -31,7 +47,9 @@
                 </div>
             </div>
             <div>
-                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Entrar</button>
+                <button id="login-button" type="button" class="w-100 btn btn-lg btn-primary">Entrar</button>
+                <input type="hidden" id="tokenInput" name="token" />
+                <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary d-none"></button>
             </div>
             <div>
                 <p>
