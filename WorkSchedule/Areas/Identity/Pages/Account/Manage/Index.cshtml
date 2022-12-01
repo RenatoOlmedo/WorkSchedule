@@ -31,7 +31,7 @@
            <br />
             @if(Model.usuario.empresa != null)
             {
-                <select disabled name="empresaId">
+                <select disabled name="empresaId" class="form-select">
                     <option selected disabled value="@Model.usuario.empresa.Id">@Model.usuario.empresa.razaoSocial</option>
                 </select>
             }
@@ -39,7 +39,7 @@
             {
                 @if(Model.empresas != null)
                 {
-                    <select name="empresaId" id="suaEmpresa" class="d-none">
+                    <select name="empresaId" id="suaEmpresa" class="d-none form-select">
                         <option value="">Selecione sua empresa</option>
                     @foreach(var emp in Model.empresas)
                     {
