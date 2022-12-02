@@ -9,7 +9,7 @@ O aplicativo WorkSchedule foi desenvolvido para facilitar a gestão de funcioná
 
 Feito com diversos métodos do login, os usuários poderão contar com praticidade e segurança, podendo fazer seu cadastro e login com a conta do Google, Facebook, ou através de um cadastro padrão (usuário e senha), protegido com Google reCaptcha v3.
 
-### Tipo de usuário:
+### Tipos de usuários:
 
 Ao efetuar o cadastro, o usuário será direcionado para uma página onde deverá completar os seus dados, podendo adicionar seu nome, telefone e escolher o tipo de usuário que deseja, sendo gestor ou funcionário de uma empresa.
 Após configurar o tipo de usuário, de acordo com a escolha, será possível adicionar uma nova empresa ou se vincular a uma.
